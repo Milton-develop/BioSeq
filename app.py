@@ -71,19 +71,19 @@ class DNAFileHandler(FileSystemEventHandler):
             latest_error = f"Error processing file {os.path.basename(event.src_path)}: {str(e)}"
             latest_results = None
 
-def start_watcher():
-    observer = Observer()
-    observer.schedule(DNAFileHandler(), WATCH_FOLDER, recursive=False)
-    observer.start()
-    print(f"Watching folder '{WATCH_FOLDER}' for new DNA files...")
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        observer.stop()
-    observer.join()
+# def start_watcher():
+#     observer = Observer()
+#     observer.schedule(DNAFileHandler(), WATCH_FOLDER, recursive=False)
+#     observer.start()
+#     print(f"Watching folder '{WATCH_FOLDER}' for new DNA files...")
+#     try:
+#         while True:
+#             time.sleep(1)
+#     except KeyboardInterrupt:
+#         observer.stop()
+#     observer.join()
 
-threading.Thread(target=start_watcher, daemon=True).start()
+# threading.Thread(target=start_watcher, daemon=True).start()
 
 # --- Login route ---
 @app.route("/login", methods=["GET", "POST"])
