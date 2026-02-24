@@ -20,56 +20,56 @@ WATCH_FOLDER = "./lab_exports"
 os.makedirs(WATCH_FOLDER, exist_ok=True)
 
 # --- File Watcher ---
-class DNAFileHandler(FileSystemEventHandler):
-    def on_created(self, event):
-        global latest_results, latest_error, sequence_history
-        if event.is_directory or not event.src_path.endswith((".txt", ".csv")):
-            return
-        try:
-            with open(event.src_path, "r") as f:
-                raw_seq = f.read().strip()
+# class DNAFileHandler(FileSystemEventHandler):
+#     def on_created(self, event):
+#         global latest_results, latest_error, sequence_history
+#         if event.is_directory or not event.src_path.endswith((".txt", ".csv")):
+#             return
+#         try:
+#             with open(event.src_path, "r") as f:
+#                 raw_seq = f.read().strip()
 
-            seq = clean_sequence(raw_seq)
-            filename_or_manual = os.path.basename(event.src_path)
+#             seq = clean_sequence(raw_seq)
+#             filename_or_manual = os.path.basename(event.src_path)
 
-            if not seq:
-                latest_error = f"No DNA sequence found in {filename_or_manual}"
-                latest_results = None
-                return
-            if not is_valid_dna(seq):
-                latest_error = f"Invalid DNA sequence in {filename_or_manual}"
-                latest_results = None
-                return
+#             if not seq:
+#                 latest_error = f"No DNA sequence found in {filename_or_manual}"
+#                 latest_results = None
+#                 return
+#             if not is_valid_dna(seq):
+#                 latest_error = f"Invalid DNA sequence in {filename_or_manual}"
+#                 latest_results = None
+#                 return
 
-            protein_data = translate_dna(seq)
-            rev_comp_seq = reverse_complement(seq)
-            complement_map = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
-            comp_pairs = [{"original": base, "complement": complement_map.get(base, base)} for base in seq]
-            rev_comp_pairs = comp_pairs[::-1]
-            protein_string = "".join([item['name'][0] if item['name'] != 'STOP' else '*' for item in protein_data])
+#             protein_data = translate_dna(seq)
+#             rev_comp_seq = reverse_complement(seq)
+#             complement_map = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
+#             comp_pairs = [{"original": base, "complement": complement_map.get(base, base)} for base in seq]
+#             rev_comp_pairs = comp_pairs[::-1]
+#             protein_string = "".join([item['name'][0] if item['name'] != 'STOP' else '*' for item in protein_data])
 
-            latest_results = {
-                "length": sequence_length(seq),
-                "gc": gc_content(seq),
-                "protein_length": len(protein_data),
-                "protein": protein_data,
-                "protein_str": protein_string,
-                "rev_comp": rev_comp_seq,
-                "rev_comp_pairs": rev_comp_pairs,
-                "source": filename_or_manual
-            }
+#             latest_results = {
+#                 "length": sequence_length(seq),
+#                 "gc": gc_content(seq),
+#                 "protein_length": len(protein_data),
+#                 "protein": protein_data,
+#                 "protein_str": protein_string,
+#                 "rev_comp": rev_comp_seq,
+#                 "rev_comp_pairs": rev_comp_pairs,
+#                 "source": filename_or_manual
+#             }
 
-            sequence_history.append({
-                "file": filename_or_manual,
-                "results": latest_results
-            })
+#             sequence_history.append({
+#                 "file": filename_or_manual,
+#                 "results": latest_results
+#             })
 
-            latest_error = None
-            print(f"Processed sequence from {filename_or_manual}")
+#             latest_error = None
+#             print(f"Processed sequence from {filename_or_manual}")
 
-        except Exception as e:
-            latest_error = f"Error processing file {os.path.basename(event.src_path)}: {str(e)}"
-            latest_results = None
+#         except Exception as e:
+#             latest_error = f"Error processing file {os.path.basename(event.src_path)}: {str(e)}"
+#             latest_results = None
 
 # def start_watcher():
 #     observer = Observer()
