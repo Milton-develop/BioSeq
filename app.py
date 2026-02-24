@@ -5,7 +5,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 app = Flask(__name__)
-app.secret_key = "ritamarley"  # change this for production
+app.secret_key = os.environ.get("SECRET_KEY", "dev_key_only")
 
 # --- In-memory user storage ---
 users = {}  # format: {username: password}
