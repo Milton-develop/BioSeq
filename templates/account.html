@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/account.css') }}">
+</head>
+<body>
+
+{% if request.args.get('msg') %}
+    <div class="flash-msg">
+        {{ request.args.get('msg') }}
+    </div>
+{% endif %}
+
+
+<div class="account-container">
+
+    <!-- Header -->
+    <header class="account-header">
+        <p>Welcome, {{ username }}</p>
+
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </header>
+
+    <!-- Profile Section -->
+    <section class="card">
+        <h2>Profile Information</h2>
+        <p><strong>Username:</strong> {{ username }}</p>
+    </section>
+
+    <!-- Analysis Stats -->
+    <section class="card">
+        <h2>Analysis Statistics</h2>
+        <p><strong>Total DNA Samples Analyzed:</strong> {{ total_analyses or 0 }}</p>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="card">
+        <h2>Recent Analyses</h2>
+
+        {% if recent_analyses %}
+            <ul class="analysis-list">
+                {% for item in recent_analyses %}
+                    <li>
+                        <span class="file">{{ item.file }}</span>
+                        <span class="date">{{ item.date }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No analyses yet.</p>
+        {% endif %}
+    </section>
+
+    <!-- Data Controls -->
+    <section class="card danger">
+        <h2>Data Management</h2>
+        <h3>Please clear your data before you logout</h3>
+        <form method="POST" action="/clear-history">
+            <button type="submit" class="danger-btn">
+                Clear Analysis History
+            </button>
+        </form>
+    </section>
+
+</div>
+
+</body>
+</html>

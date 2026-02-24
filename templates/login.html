@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioSeq Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <!-- LOGIN -->
+    <div class="login-container" id="loginContainer">
+        <h2>Login</h2>
+        <h1>BioSeq Analyzer</h1>
+        <h2 class="links">
+            Don't have an account? <a href="#" id="showSignup">Signup</a>
+        </h2>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('login') }}" id="loginForm">
+            <div class="form-group">
+                <label for="login-username" class="logins">Username</label>
+                <input type="text" id="login-username" name="username" placeholder="Enter username" required class="input">
+            </div>
+
+            <div class="form-group">
+                <label for="login-password" class="logins">Password</label>
+                <input type="password" id="login-password" name="password" placeholder="Enter password" required class="input">
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="footer">
+            &copy; 2026 BioSeq Analyzer by MiltonPixel. All rights reserved
+        </div>
+    </div>
+
+    <!-- SIGNUP -->
+    <div class="signup-container" id="signupContainer">
+        <h2>Signup</h2>
+        <h1>BioSeq Analyzer</h1>
+        <h2 class="links">
+            Already have an account? <a href="#" id="showLogin">Login</a>
+        </h2>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('signup') }}" id="signupForm">
+            <div class="form-group">
+                <label for="signup-username" class="logins">Username</label>
+                <input type="text" id="signup-username" name="username" placeholder="Enter username" required class="input">
+            </div>
+
+            <!-- <div class="form-group">
+                <label for="signup-institution" class="logins">Institution</label>
+                <input type="text" id="signup-institution" name="Institution" placeholder="University of Ghana" required class="input">
+            </div>
+
+            <div class="form-group">
+                <label for="signup-role" class="logins">Role</label>
+                <input type="text" id="signup-role" name="role" placeholder="Student, Researcher, Guest" required class="input">
+            </div> -->
+
+            <div class="form-group">
+                <label for="signup-password" class="logins">Password</label>
+                <input type="password" id="signup-password" name="password" placeholder="Enter password" required class="input">
+            </div>
+
+            <div class="form-group">
+                <label for="signup-confirm-password" class="logins">Confirm Password</label>
+                <input type="password" id="signup-confirm-password" name="confirm_password" placeholder="Confirm password" required class="input">
+            </div>
+
+            <p id="confirm"></p>
+
+            <button type="submit" onclick="return signUpUser()">Signup</button>
+        </form>
+
+        <div class="footer">
+            &copy; 2026 BioSeq Analyzer by MiltonPixel. All rights reserved
+        </div>
+    </div>
+
+<script>
+    // Toggle login/signup containers
+    const showSignup = document.getElementById("showSignup");
+    const showLogin = document.getElementById("showLogin");
+
+    const loginContainer = document.getElementById("loginContainer");
+    const signupContainer = document.getElementById("signupContainer");
+
+    showSignup.addEventListener("click", function(e) {
+        e.preventDefault();
+        loginContainer.style.display = "none";
+        signupContainer.style.display = "block";
+    });
+
+    showLogin.addEventListener("click", function(e) {
+        e.preventDefault();
+        signupContainer.style.display = "none";
+        loginContainer.style.display = "block";
+    });
+
+    // Check passwords match before submitting signup
+    function signUpUser() {
+        const passwordInput = document.getElementById("signup-password");
+        const confirmInput = document.getElementById("signup-confirm-password");
+        const msg = document.getElementById("confirm");
+
+        const password = passwordInput.value.trim();
+        const confirmPassword = confirmInput.value.trim();
+
+        if (password === confirmPassword && password !== "") {
+            msg.style.color = "green";
+            msg.textContent = "✅ Passwords match!";
+            setTimeout(() => {
+    }, 4000); // removes after 4 seconds
+
+            passwordInput.style.border = "2px solid green";
+            confirmInput.style.border = "2px solid green";
+
+            return true; // allow form submission to /signup
+        } else {
+            msg.style.color = "red";
+            msg.textContent = "❌ Passwords do not match";
+
+            passwordInput.style.border = "2px solid red";
+            confirmInput.style.border = "2px solid red";
+
+            return false; // prevent form submission
+        }
+    }
+</script>
+</body>
+</html>

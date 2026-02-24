@@ -3,69 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bioseq Analyzer</title>
-   <!-- <link rel="stylesheet" href="../static/css/about.css"> -->
+    <title>About BioSeq Analyzer</title>
    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
-
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
-    <h1>About Bioseq Analyzer</h1>
-    <h3>
-   
+    <h1>BioSeq Analyzer</h1>
+    <h2>Web-Based DNA Analysis Tool</h2>
+
+  <div class="mobile-about-nav">
+    <button class="about-menu-btn" onclick="toggleAboutMenu()">
+        ☰ Menu
+    </button>
+    <div id="about-dropdown" class="about-dropdown-content">
+        <a href="#about" onclick="toggleAboutMenu()">Mission</a>
+        <a href="#features" onclick="toggleAboutMenu()">Features</a>
+        <a href="#structure" onclick="toggleAboutMenu()">3D Structure</a> <!-- NEW LINK -->
+        <a href="#methodology" onclick="toggleAboutMenu()">Methodology</a>
+        <a href="#metrics" onclick="toggleAboutMenu()">Metrics</a>
+        <!-- <a href="#tech" onclick="toggleAboutMenu()">Tech Stack</a> -->
+        <a href="#usage" onclick="toggleAboutMenu()">How to Use</a>
+        <a href="#audience" onclick="toggleAboutMenu()">Audience</a>
+        <a href="#limitations" onclick="toggleAboutMenu()">Limitations</a>
+        <a href="#future" onclick="toggleAboutMenu()">Future</a>
+    </div>
+</div>
+
+<nav class="about-nav">
+    <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#structure">3D Structure</a></li> <!-- NEW LINK -->
+        <li><a href="#methodology">Methodology</a></li>
+        <li><a href="#metrics">Metrics</a></li>
+        <li><a href="#usage">How to Use</a></li>
+        <!-- <li><a href="#tech">Tech Stack</a></li> -->
+        <li><a href="#audience">Audience</a></li>
+        <li><a href="#limitations">Limitations</a></li>
+        <li><a href="#future">Future</a></li>
+    </ul>
+</nav>
+
+<fieldset id="about">
+    <h3 class="head">About the DNA & Protein Sequence Analyzer:</h3>
+    <br>
+Welcome to a streamlined bioinformatics suite designed for the modern researcher. 
+This platform bridges the gap between raw genetic data and functional protein 
+analysis, providing an intuitive interface to decode the "blueprint of life."
+</fieldset>
+
+<fieldset id="mission">
+    <h3 class="head">Our Mission:</h3>
+    <br>
+In an era of genomic discovery, tools should be as powerful as they are accessible.
+ This analyzer was built to provide high-fidelity DNA-to-Protein translation and 
+ structural strand mapping without the complexity of traditional command-line tools.
+  Whether you are validating a PCR primer or exploring an open reading frame, our
+   interface delivers immediate, visual results.
+</fieldset>
 
 
+<fieldset id="features">
+    <h3 class="head">Key Features:</h3>
+    <ul>
+        <li><strong>Dual-Strand Mapping:</strong> Instantly generate the complementary 
+            antisense strand with color-coded nucleotide visualization 
+            for rapid pattern recognition.
+        </li>
+        <li><strong>Intelligent Translation:</strong> Accurate conversion of DNA codons 
+            into their respective amino acids, including precise 
+            detection of STOP codons (Opal, Ochre, and Amber).
+        </li>
+        <li><strong>Chemical Profiling:</strong> Beyond the sequence, analyze the 
+            translated protein’s "personality" through a breakdown 
+            of Hydrophobic, Polar (Charged and Uncharged), Acidic, and Basic properties.
+        </li>
+        <!-- NEW FEATURE ADDED HERE -->
+        <li><strong>3D Structural Integration:</strong> A seamless workflow connecting linear
+            sequence analysis to 3D molecular visualization via the Protein Data Bank (PDB).
+        </li>
+        <li><strong>Data Portability:</strong> Designed for the mobile researcher
+             with support for TXT exports, ensuring your results 
+             are lab-notebook ready wherever you are.
+        </li>
+        <li><strong>Bio-Validation:</strong> A robust pre-analysis engine that
+             cleans sequences and detects non-biological 
+             characters, ensuring data integrity before 
+             processing begins.
+        </li>
+    </ul>
+</fieldset>
 
-About the DNA & Protein Sequence Analyzer: 
-<br>
-Welcome to a streamlined bioinformatics suite designed for the modern researcher. This platform bridges the gap between raw genetic data and functional protein analysis, providing an intuitive interface to decode the "blueprint of life."
-<br>
+<!-- NEW SECTION START -->
+<fieldset id="structure">
+    <h3 class="head">3D Structural Visualization Pipeline</h3>
+    <p>
+        DNA sequences provide the code, but proteins function in three dimensions. 
+        BioSeq Analyzer now includes a structural bridge that allows students to visualize 
+        the final folded shape of their analyzed proteins.
+    </p>
+    <ul>
+        <li>
+            <strong>The Identification Bridge:</strong> After translation, the system generates 
+            the raw single-letter amino acid string suitable for NCBI BLAST analysis.
+            Users can instantly identify unknown proteins by cross-referencing global databases.
+        </li>
+        <li>
+            <strong>Interactive PDB Viewer:</strong> Using the <strong>Protein Data Bank (PDB)</strong> ID
+            found via BLAST, users can render interactive 3D models directly in the browser.
+        </li>
+        <li>
+            <strong>Visual Styles:</strong> The viewer supports multiple rendering modes:
+            <ul>
+                <li><em>Cartoon:</em> Best for visualizing secondary structures (Alpha Helices & Beta Sheets).</li>
+                <li><em>Stick:</em> Ideal for examining chemical bonds and atomic connections.</li>
+                <li><em>Sphere:</em> Useful for visualizing volume and surface area.</li>
+            </ul>
+        </li>
+    </ul>
+</fieldset>
+<!-- NEW SECTION END -->
 
-<br>
-Our Mission:
-<br>
-In an era of genomic discovery, tools should be as powerful as they are accessible. This analyzer was built to provide high-fidelity DNA-to-Protein translation and structural strand mapping without the complexity of traditional command-line tools. Whether you are validating a PCR primer or exploring an open reading frame, our interface delivers immediate, visual results.
-<br>
+<fieldset id="methodology">
+  <h3 class="head">Methodology & Analysis Pipeline</h3>
+  <p>
+    BioSeq Analyzer follows a deterministic, codon-based analysis pipeline designed for clarity,
+    reproducibility, and educational transparency. The engine scans the sequence for the 
+    initiation (Start) codon and translates until the first in-frame termination (Stop) 
+    signal is reached.
+  </p>
 
-<br>
-Key Features:
-<br>
-Dual-Strand Mapping: Instantly generate the complementary antisense strand with color-coded nucleotide visualization for rapid pattern recognition.
-<br>
-Intelligent Translation: Accurate conversion of DNA codons into their respective amino acids, including precise detection of STOP codons (Opal, Ochre, and Amber).
-<br>
-Chemical Profiling: Beyond the sequence, analyze the translated protein’s "personality" through a breakdown of Hydrophobic, Polar, Acidic, and Basic properties.
-<br>
-Data Portability: Designed for the mobile researcher with support for PDF and TXT exports, ensuring your results are lab-notebook ready wherever you are.
-<br>
-Bio-Validation: A robust pre-analysis engine that cleans sequences and detects non-biological characters, ensuring data integrity before processing begins.
-<br>
+  <ol>
+    <li>
+      <strong>Sequence Preprocessing:</strong>
+      User-provided DNA sequences are cleaned by removing whitespace and line breaks, and normalized
+      to uppercase to ensure consistency.
+    </li>
 
-<br>
-The Tech Stack:
-<br>
-This platform is a testament to the power of modern web technologies:
-<br>
-Engine: Powered by Python & Flask, handling complex biological logic and sequence manipulation.
-<br>
-Logic: Custom-built translation and chemical classification algorithms in `analysis.py`.
-<br>
-Frontend: A responsive, interactive UI utilizing HTML5, CSS, and JavaScript for real-time visualization.
-<br>
-Graphics: Lightweight, high-performance SVG-based gauges and dynamic composition bars.
-<br>
+    <li>
+      <strong>Biological Validation:</strong>
+      The system verifies that the sequence contains only valid DNA nucleotides (A, T, G, C)
+      before any downstream analysis is performed.
+    </li>
 
-<br>
-How to Use It:
-<br>
-1. Input: Paste your DNA sequence (A, T, G, C) into the analyzer.
-<br>
-2. Process: Click "Analyze" to trigger the translation engine.
-<br>
-3. Explore: Toggle Dark Mode for better visibility or review the side-by-side strand mapping.
-<br>
-4. Export: Download your findings as a professional PDF report for further study.
+    <li>
+      <strong>GC Content & Length Calculation:</strong>
+      Sequence length and GC percentage are computed to provide basic compositional insight.
+    </li>
 
-    </h3>
-    <!-- <button onclick="window.location.href='index.html'" class="btn">Home</button> -->
+    <li>
+      <strong>Reverse Complement Generation:</strong>
+      The complementary strand is generated using standard base-pairing rules (A↔T, C↔G)
+      and reversed to reflect antiparallel orientation.
+    </li>
+
+    <li>
+      <strong>Codon-Based Translation:</strong>
+      The cleaned sequence is read in triplets (codons) using the standard universal genetic code.
+      Each codon is mapped to its corresponding amino acid, with STOP codons explicitly identified.
+    </li>
+  </ol>
+
+  <p>
+    The current implementation assumes a continuous coding region and operates in a single reading
+    frame. Intron-exon structure, alternative splicing, and organism-specific codon bias are
+    outside the scope of Version 1.0.
+  </p>
+</fieldset>
+
+<fieldset id="metrics">
+  <h3 class="head">Computed Metrics & Biological Interpretation</h3>
+
+  <p>
+    In addition to sequence translation, BioSeq Analyzer computes several fundamental
+    metrics that provide insight into the biological properties of the input DNA sequence.
+  </p>
+
+  <ul>
+    <li>
+      <strong>Sequence Length:</strong>
+      Calculated as the total number of valid nucleotides (A, T, G, C) in the cleaned input sequence.
+      This metric provides a basic measure of the size of the analyzed region.
+    </li>
+
+    <li>
+      <strong>GC Content (%):</strong>
+      GC content is computed as the percentage of guanine (G) and cytosine (C) bases
+      relative to the total sequence length:
+      <br>
+      <em>(G+C divided by Total Bases) multiplied by 100%</em>
+      <br>
+      This value is commonly used to assess sequence stability, melting behavior,
+      and organismal genomic characteristics.
+    </li>
+
+    <li>
+      <strong>Protein Sequence:</strong>
+    The sequence of amino acids is determined by the linear order of codons
+     in the mRNA (or DNA coding strand). Each triplet is translated into a 
+     specific amino acid based on the standard genetic code, beginning at 
+     a Start codon ($ATG$) and ending at a Stop codon.
+    </li>
+
+    <li>
+    <strong>Protein Length:</strong>
+    Protein length is defined as the total number of amino acids in the translated polypeptide. 
+    While the STOP codon (UAA, UAG, or UGA) is critical for terminating the translation process, 
+    it does not encode a physical amino acid and is <strong>not included</strong> in the final 
+    length count.
+</li>
+  </ul>
+
+  <p>
+    These metrics are intended for exploratory analysis and educational use,
+    providing rapid biological context prior to more advanced downstream analysis.
+  </p>
+</fieldset>
+
+<!-- <fieldset id="tech">
+    <h3 class="head">The Tech Stack:</h3>
+    <br>
+    This platform is a testament to the power of modern web technologies:
+    <ul>
+        <li><strong>Engine:</strong> Powered by Python & Flask, handling complex biological logic and sequence manipulation.</li>
+        <li><strong>Logic:</strong> Custom-built translation and chemical classification algorithms in <code>analysis.py</code>.</li>
+        <li><strong>Frontend:</strong> A responsive, interactive UI utilizing HTML5, CSS, and JavaScript for real-time visualization.</li>
+        <li><strong>Visualization:</strong> Integration with Py3Dmol and Streamlit for molecular rendering.</li>
+    </ul>
+</fieldset> -->
+
+<fieldset id="usage">
+    <h3 class="head">How to Use It</h3>
+    <ul>
+        <li><strong>Input:</strong> Paste your DNA sequence (A, T, G, C) into the analyzer.</li>
+        <li><strong>Process:</strong> Click "Analyze" to trigger the translation engine.</li>
+        <li><strong>Identify:</strong> Use the BLAST bridge to identify unknown proteins and retrieve PDB IDs.</li>
+        <li><strong>Visualise:</strong> Input the PDB ID into the 3D Viewer to explore the molecule's shape.</li>
+        <li><strong>Export:</strong> Download your findings as a professional TXT report for further study.</li>
+    </ul>
+</fieldset>
+
+<fieldset id="audience">
+    <h3 class="head">Who Is This For?</h3>
+    <p>
+        BioSeq Analyzer is designed for a broad range of users within the life sciences and bioinformatics space:
+    </p>
+    <ul>
+        <li><strong>Students</strong> seeking an intuitive way to understand DNA-to-protein translation and strand complementarity without steep learning curves.</li>
+        <li><strong>Researchers and laboratory scientists</strong> who need quick, reliable sequence validation and translation during experimental workflows.</li>
+        <li><strong>Educators</strong> looking for a visual, browser-based teaching aid to demonstrate molecular biology concepts.</li>
+        <li><strong>Early-career bioinformaticians</strong> who want a lightweight, web-based alternative to command-line tools for rapid exploratory analysis.</li>
+    </ul>
+</fieldset>
+
+<fieldset id="limitations">
+    <h3 class="head">Limitations & Intended Use (Version 1.0)</h3>
+    <p>
+        BioSeq Analyzer is intended as an educational and exploratory bioinformatics tool. While it provides accurate
+        DNA validation, strand mapping, and codon-based protein translation, it is not designed to replace
+        full-scale genomic analysis pipelines or certified clinical software.
+    </p>
+    <ul>
+        <li>The analyzer operates on user-provided sequences and does not perform genome assembly, alignment, or variant calling.</li>
+        <li>Protein translation is based on standard codon tables and does not account for organism-specific codon bias.</li>
+        <li>Chemical profiling provides general residue classifications and should be interpreted as qualitative rather than predictive.</li>
+        <li>Results are intended for research, learning, and preliminary analysis, not for clinical or diagnostic decision-making.</li>
+    </ul>
+</fieldset>
+
+<fieldset id="future">
+    <h3 class="head">Future Development</h3>
+    <p>
+        BioSeq Analyzer is under active development. Planned extensions include expanded analytical capabilities,
+        organism-specific translation models, enhanced data persistence, and support for additional bioinformatics
+        workflows as the platform evolves.
+    </p>
+</fieldset>
+
+    <a href="/" class='btn'>Back to Dashboard</a>
+     <footer>
+     <p class="copyright">&copy; 2026 BioSeq Analyzer by MiltonPixel. All Rights Reserved</p>
+   </footer>
 </body>
+
+<script>
+    function toggleAboutMenu() {
+    const dropdown = document.getElementById("about-dropdown");
+    if (dropdown.style.display === "block") {
+        dropdown.style.display = "none";
+    } else {
+        dropdown.style.display = "block";
+    }
+}
+
+// Close the menu if the user clicks outside of it
+window.onclick = function(event) {
+    if (!event.target.matches('.about-menu-btn')) {
+        const dropdown = document.getElementById("about-dropdown");
+        if (dropdown && dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+        }
+    }
+}
+</script>
 </html>

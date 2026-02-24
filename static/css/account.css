@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #0f172a;
+}
+
+.account-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.account-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.account-header h1 {
+    margin: 0;
+    color: #0f172a;
+}
+
+.account-header p{
+    color: #0f172a;
+}
+
+.logout-btn {
+    text-decoration: none;
+    color: white;
+    background: #0284c7;
+    padding: 8px 14px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #97dcff;
+    width: 15rem;
+}
+
+.analysis-list {
+    list-style: none;
+    padding: 0;
+}
+
+.analysis-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.danger {
+    border-left: 4px solid #cc0000;
+}
+
+.danger-btn {
+    background: #cc0000;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+h3{
+    color: red;
+}
+
+.flash-msg {
+    background-color: #4CAF50; /* green */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}

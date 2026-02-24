@@ -9,6 +9,12 @@
 </head>
 <body>
 
+<div id="welcome-toast">
+    👋 Welcome to <strong>BioSeq Analyzer</strong><br>
+    Analyze DNA. Understand Biology.
+</div>
+
+
 <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-label="Toggle Navigation Menu">
 <label for="menu-toggle" class="hamburger">
     <span class="bar top"></span>
@@ -16,25 +22,63 @@
     <span class="bar bottom"></span>
 </label>
     <aside>
+
+<div class="sidebar-header">
+        {% if username %}
+            <div class="user-info">
+                <a href="{{ url_for('account') }}" class="account-link"><img src="/static/assets/user icon.png" alt="user-icon" class="user-icon"> </a>
+              <strong class="name">{{ username }}</strong>
+            </div>
+        {% endif %}
+    </div>
         <nav>
             <ul class="sidebar">
                 <li class="active"><a>Dashboard</a></li>
+                <li><a href="{{ url_for('account') }}">Account</a></li>
+                 <li><a href="/history" class="tests">Tests History</a></li>
                 <li><a href="{{ url_for('about') }}">About Tool</a></li>
+                <li><a href="http://localhost:8503/">3D Protein View</a></li>
             </ul>
         </nav>
          <button id="darkModeToggle" type="button">Dark Mode</button>
+         <div class="sidebar-footer">
+        &copy; 2026 BioSeq Analyzer by MiltonPixel. All rights reserved
+    </div>
     </aside>
     <main>
+
+<!-- <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a> -->
+
+
         <div class="head">
-        <h1>Bioinformatics Sequence Analyzer</h1>
-        <h3>DNA & Protein Sequence Interface</h3>
+        <h1>BioSeq Analyzer</h1>
+        <h3>Web-Based DNA Analysis Tool</h3>
+        <p class="note">
+                ⚠️ Note: Please go to the account section and clear your data after analysis before you logout.
+            </p>
         </div>
+
+   {% if username %}
+    <div class="welcome">
+        Welcome, <strong>{{ username }}</strong>
+        <p>You are using the BioSeq Analyzer Version 1.0.</p>
+    </div>
+
+    <form method="POST" class="dna-sequence">
+        <!-- DNA input form as before -->
+    </form>
+    {% else %}
+    <div class="error-box">
+        Please <a href="{{ url_for('login') }}">login</a> to analyze DNA sequences.
+    </div>
+    {% endif %}
+
+
     <form method="POST" class="dna-sequence">
         <label for="sequence" name="sequence">Enter DNA Sequence</label>
         <textarea name="sequence" id="sequence" placeholder="AGTCTTGACG..." rows="5" required></textarea>
         <button type="submit" class="btn">Analyze Sequence</button>
-        <button type="reset" class="btnn">Clear</button>
-        <a href="/history" class="tests">View Previous Tests</a>
+        <button type="reset" class="btnn">Clear Input</button>
 
 
 {% if error %}
@@ -47,6 +91,10 @@
 <div class="success-box">
   Analysis completed successfully.
 </div>
+
+<button type="button" class="btn" onclick="downloadReport()">
+    <i class="fas fa-download"></i> Download TXT Report
+</button>
 
 <div class="tables-container">
     
@@ -90,14 +138,52 @@
 
 </div>
 
-<button type="button" class="btn" onclick="downloadReport()">
-    <i class="fas fa-download"></i> Download TXT Report
-</button>
-<button type="button" class="btn" onclick="downloadPDF()">
-    Download PDF Report
-</button>
+
 {% endif %}
 
+
+<!-- Structural Analysis Bridge -->
+{% if results and results.protein_str %}
+<div class="container mt-5 mb-5" style="border: 2px solid var(--text-main); border-radius: 10px; padding: 20px; background-color: var(--bg-main); color: var(-text-main)">
+    <h4 class="text-primary"><i class="bi bi-box-seam"></i> 3D Structure Analysis</h4>
+    <p>To view the 3D structure, we first need to identify the protein's PDB Code.</p>
+    
+    <div class="row">
+        <!-- Step 1: Copy Sequence -->
+        <div class="col-md-8">
+            <label class="fw-bold">Step 1: Raw Protein Sequence</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="rawSeq" title="form"
+                       value="{{ results.protein_str }}" readonly 
+                       style="font-family: monospace; letter-spacing: 2px;">
+                <button class="btn btn-secondary" onclick="copySeq()">Copy</button>
+            </div>
+        </div>
+
+        <!-- Step 2: BLAST Search -->
+        <div class="col-md-4">
+            <label class="fw-bold">Step 2: Find PDB ID</label>
+            <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastp&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome&DATABASE=pdb&QUERY={{ results.protein_str }}" rel="noopener"
+               target="_blank" 
+               class="btn-run w-100">
+               <i class="bi bi-search"></i> Identify on BLAST
+            </a>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <p class="small text-muted mb-0">
+        <strong>Instructions:</strong> 
+        <br>
+        1. Make sure to tick that option suggests "Show results in a new window" <br>
+        2. Click the Blue button to run a BLAST search. <br>
+        3. Look at the search results and find the <strong>PDB ID</strong> from the table under the accession column (e.g., 4HHB). <br>
+        4. Open the <strong>3D Protein Viewer</strong> from the main portal sidebar on the dashboard and type that ID.
+    </p>
+</div>
+
+{% endif %}  
 
     </form>
 
@@ -117,11 +203,23 @@
     <h4>Protein Length</h4>
     <p>{{ results.protein_length }} aa</p>
   </div>
+
+  <div class="stat-card">
+    {% if results and results.chem_profile %}
+    <div class="profile-section">
+        <p class="hydro">Hydrophobic: {{ results.chem_profile.hydrophobic }}</p>
+        <p class="uncharged">Polar Uncharged: {{ results.chem_profile.polar }}</p>
+        <p class="acidic">Acidic: {{ results.chem_profile.acidic }}</p>
+        <p class="basic">Basic: {{ results.chem_profile.basic }}</p>
+        <p class="charged">Polar Charged: {{ results.chem_profile.charged }}</p>
+        </div>
+{% endif %}
+  </div>
 </section>
 {% endif %}
 
  <!-- RESULTS TABLE  -->
-<section class="card">
+<section>
       <h3>Analysis Summary</h3>
       <table>
         <thead>
@@ -134,22 +232,25 @@
         <tbody>
           <tr>
             <td>Length</td>
-            <td>Total nucleotide count</td>
-            <td>{{ results.length }}</td>
+            <td>Total nucleotide count (A, T, G and C)</td>
+            <td>{{ results.length }} bp</td>
           </tr>
           <tr>
             <td>GC %</td>
-            <td>Guanine-Cytosine content</td>
-            <td>{{ results.gc }}</td>
+            <td>Percentage of Guanine-Cytosine content</td>
+            <td>{{ results.gc }}%</td>
           </tr>
           <tr>
             <td>Protein Size</td>
-            <td>Translated amino acids</td>
-            <td>{{ results.protein_length }} </td>
+            <td>Number of translated amino acids</td>
+            <td>{{ results.protein_length }} aa</td>
           </tr>
         </tbody>
-        {% if results %}
-    <table>
+    </section>
+
+ <!--{% if results %}
+     <section>
+            <table class="summary">
         <thead>
             <tr>
                 <th>Codon</th>
@@ -167,13 +268,15 @@
     </table>
 {% endif %}
       </table>
-    </section>
+    </section> -->
 
-  
+
     </main>  
-
+  
+  
 
 <script>
+
 const toggle = document.getElementById('darkModeToggle');
 
 toggle.addEventListener('click', () => {
@@ -295,6 +398,20 @@ async function downloadPDF() {
 
     // 5. Save the PDF
     doc.save("Bio_Analysis_Report.pdf");
+}
+
+setTimeout(() => {
+        const toast = document.getElementById("welcome-toast");
+        if (toast) {
+            toast.remove();
+        }
+    }, 5000); // removes after 5 seconds
+
+ function copySeq() {
+    var copyText = document.getElementById("rawSeq");
+    copyText.select();
+    navigator.clipboard.writeText(copyText.value);
+    alert("Sequence copied! Use this in the Viewer if needed.");
 }
 </script>
 

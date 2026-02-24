@@ -48,6 +48,7 @@ a{
     padding: 20px;
     width: 56.9em;
     margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 label{
     display: block;
@@ -61,6 +62,7 @@ label{
     width: 60em;
     font-family: 'time new roman';
     padding: 5px;
+    border: 2px solid var(--primary);
 }
 .btn{
     margin: 10px;
@@ -78,6 +80,7 @@ label{
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 .stat-card{
     background: var(--bg-card);
@@ -138,6 +141,7 @@ tbody tr:nth-child(even) {
     border-radius: 6px;
     background: var(--primary);
     cursor: pointer;
+    color: white;
 }
 /* Overlay background */
 #messageOverlay {
@@ -218,9 +222,10 @@ aside {
 
 .stat-card {
     width: auto; /* Allow cards to fill grid space */
-    margin: 0;
+    margin: 2px;
 }
 
+}
 /* --- Responsive Media Query (Tablets & Desktops) --- */
 @media (min-width: 768px) {
     body {
@@ -238,7 +243,7 @@ aside {
 
     #sequence {
         width: 95%; /* Adjust as needed for desktop */
-    }
+
 }
 
 /* --- Mobile Table Fix --- */
@@ -248,6 +253,7 @@ aside {
         /* padding: 8px; */
         border: none;
         background: none;
+        padding: 20px;
     }
 
     thead tr {
@@ -459,6 +465,156 @@ body.dark-mode .base-T { color: #4dabf7; }
 body.dark-mode .base-G { color: #ffd43b; }
 body.dark-mode .base-C { color: #69db7c; }
 
-.tests{
-    color: var(--primary);
+.chat{
+    color: blue;
+}
+
+table, th, td{
+    border: 3px solid var(--text-main);
+}
+
+.summary{
+    margin-top: 1em;
+}
+
+.welcome{
+    color: var(--text-main);
+    padding: 10px;
+    font-size: 18px;
+}
+
+
+.logout-btn {
+    position: fixed;        /* stays visible while scrolling */
+    top: 15px;
+    right: 20px;
+    background: var(--primary);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #2590c5;
+    transform: scale(1.1);
+}
+
+.sidebar-header{
+    padding-bottom: 10px;
+    color: white;
+}
+
+#welcome-toast {
+    position: fixed;
+    top: 20px;
+    right: 100px;
+    background: var(--text-main);
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: slideIn 0.5s ease forwards,
+               fadeOut 0.5s ease forwards 3.5s;
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.note{
+    color: red;
+}
+
+/* Sidebar user info layout */
+.user-info {
+    display: flex;           /* horizontal layout */
+    align-items: center;     /* vertically center image & name */
+    gap: 10px;               /* space between icon and name */
+    padding: 8px 0;          /* optional: vertical spacing */
+}
+
+.user-icon {
+    width: 36px;             /* professional size */
+    height: 36px;
+    border-radius: 50%;      /* round icon */
+    object-fit: cover;       /* keep proportions */
+    transition: transform 0.2s ease;  /* subtle hover effect */
+    cursor: pointer;
+}
+
+.user-icon:hover {
+    transform: scale(1.1);   /* small hover zoom for UX polish */
+}
+
+.name {
+    font-weight: 600;        /* slightly bolder */
+    font-size: 1rem;         /* adjust if needed */
+    color: white;            
+}
+
+.account-link{
+    display: inline-block;
+}
+
+.profile-section p{
+    font-size: 13px;
+    padding: 0.1em;
+}
+
+.hydro{
+    color: #d9534f;
+}  
+
+.uncharged{
+    color: #0275d8;
+}
+
+.acidic{
+   color: #f0ad4e;
+}
+
+.basic{
+  color: #5cb85c;
+}
+
+.charged{
+ color: #7C3AED;
+}
+
+.hide{
+    display: none;
+}
+
+.sidebar-footer{
+    color: white;
+    padding: 30px 5px; 
+    font-size: 0.8rem; 
+    opacity: 0.8;
+}
+
+.btn-warning{
+    background-color: var(--primary);
+}
+
+.btn-run{
+    background-color: var(--primary);
 }
