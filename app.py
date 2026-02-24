@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from analysis import clean_sequence, sequence_length, gc_content, translate_dna, is_valid_dna, reverse_complement, get_chem_profile
 import threading, time, os
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+# from watchdog.observers import Observer
+# from watchdog.events import FileSystemEventHandler
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "dev_key_only")
